@@ -247,10 +247,10 @@ class PlayList {
 
         else{
 
-        int min = -1;
-        int index = -1;
+        int min = this.tracks[start].getDuration();
+        int index = start;
 
-        for ( int i = start; i < this.size; i++)
+        for ( int i = start + 1; i < this.size; i++)
         {
             if ( this.tracks[i].getDuration() < min)
             {
