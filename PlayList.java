@@ -223,7 +223,7 @@ class PlayList {
     //// An elegant and terribly inefficient implementation.
      public void add(PlayList other) {
 
-        if ( this.maxSize - this.size > other.size)
+        if (other.size + this.size <= this.maxSize)
         {
             for ( int i = 0; i < other.size; i++)
             {
@@ -240,10 +240,12 @@ class PlayList {
      */
     private int minIndex(int start) {
 
-        if ( (start < 0) || (start > this.size))
+        if ( (start < 0) || (start > this.size - 1))
         {
             return -1;
         }
+
+        else{
 
         int min = -1;
         int index = -1;
@@ -253,11 +255,13 @@ class PlayList {
             if ( this.tracks[i].getDuration() < min)
             {
                 index = i;
+                min = this.tracks[i].getDuration();
             }
         }
 
         return index;
     }
+}
 
     /** Returns the title of the shortest track in this list. 
      *  If the list is empty, returns null. */
@@ -270,18 +274,16 @@ class PlayList {
      *  rather than returning a new, sorted playlist, the method sorts
      *  the list on which it was called (this list). */
     public void sortedInPlace() {
-/* 
-      for ( int i = 0; i < this.tracks.length -1; i++)
-      {
-        int min = i;
-        for ( int k = i + 1; k < )
-      }  
 
+        int index = 0;
 
-        // Uses the selection sort algorithm,  
-        // calling the minIndex method in each iteration.
-        
-    }
-    */
-   }
+        for(int i = 0; i < this.size; i++)
+        {
+
+           index = minIndex(i);
+           Track temp = this.tracks[i];
+           this.tracks[i] = tracks[index];
+           tracks[index] = temp;
+
+        }
 }
