@@ -44,7 +44,7 @@ class Track {
     private String formattedDuration(int totalSeconds) {
         int seconds = totalSeconds % 60;
         int minutes = totalSeconds / 60;
-        String total = String.format("%02d:%02d", minutes, seconds);
+        String total = Integer.toString(minutes, seconds);
         return total;
     }
 }
