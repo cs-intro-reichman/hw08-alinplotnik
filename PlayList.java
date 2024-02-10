@@ -83,21 +83,14 @@ class PlayList {
     /** Returns the data of this list, as a string. Each track appears in a separate line. */
     //// For an efficient implementation, use StringBuilder.
     public String toString() {
-
-        StringBuilder s = new StringBuilder();
-
-        for (int i = 0; i < this.size; i++)
-        {
-            s.append(this.tracks[i].toString());
-            if (i != this.size-1)
-            {
-                s.append("\n");
-            }
+        StringBuilder trackList = new StringBuilder();
+        trackList.append("\n");
+        for (int i = 0; i < size; i++){
+            trackList.append(tracks[i].toString());
+            trackList.append("\n");
         }
-
-        String result = (s.toString());
-
-        return result;
+        
+        return trackList.toString();
     }
 
     /** Removes the last track from this list. If the list is empty, does nothing. */
@@ -150,20 +143,13 @@ class PlayList {
      *  returns true. */
     public boolean add(int i, Track track) {
 
-        if ( (i < 0) || (i > this.size) || (this.size == this.maxSize)) //If i is negative or greater than the size of this list, or if the list is full
+        if (i < 0 || i > maxSize || size == maxSize )
         {
-           return false; 
+            return false;
         }
-
-        if ( i >= this.size || size == 0)   //if we can add it to the end of the playlist
-        {
-          this.add(track);
-          return true;
-        }
-
         else{
 
-           for ( int j = this.size; j < i ; j--)
+           for ( int j = this.size; j > i ; j--)
           {
               this.tracks[j] = this.tracks[j-1];
           }
@@ -180,27 +166,14 @@ class PlayList {
      *  does nothing and returns -1. */
     public void remove(int i) {
 
-        if ((this.size == 0) || (i < 0) || i > this.size - 1)
+        if (i >= 0 && i < maxSize && size != 0 )
         {
-          System.out.println("-1");
-        }
-
-        else
-        {
-            this.tracks[i] = null;
-
-            if (i != this.size - 1)
+            for (int j = i; j < size-1; j++)
             {
-                for ( int j = i; j < this.size - 1; j++)
-                {
-                    this.tracks[j] = this.tracks [j+1];
-                }
-                this.tracks[this.size - 1] = null;
+                tracks[j] = tracks[j+1];
             }
-            
-            size--;
+            removeLast();
         }
-        
     }
 
     /** Removes the first track that has the given title from this list.
@@ -223,11 +196,12 @@ class PlayList {
     //// An elegant and terribly inefficient implementation.
      public void add(PlayList other) {
 
-        if (other.size + this.size <= this.maxSize)
+        if (other.getSize() + this.size <= this.maxSize)
         {
-            for ( int i = 0; i < other.size; i++)
+            for ( int i = 0; i < other.getSize(); i++)
             {
-                this.add(other.tracks[i]);
+                this.add(other.getTrack(i));
+                this.size++;
             }
         }
     }
